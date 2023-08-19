@@ -1,8 +1,11 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:custom_shop/constants.dart';
 import 'package:custom_shop/controllers/home_controller.dart';
 import 'package:custom_shop/models/Product.dart';
 import 'package:custom_shop/screens/components/home_header.dart';
 import 'package:custom_shop/screens/components/product_card.dart';
+import 'package:custom_shop/screens/details/details_screen.dart';
 import 'package:flutter/material.dart';
 
 /**
@@ -14,6 +17,11 @@ import 'package:flutter/material.dart';
  * 
  * GestureDetector란?
  * 사용자의 움직임을 감지 하는 위젯, 즉 유저들과 상호작용 하는 가장 순수한 방법
+ * 
+ * 
+ * AnimatedBuilder란?
+ * 위젯이 많은 복잡한 화면에서 세밀하게 애니메이션을 구현할 수 있도록 함.
+ * builder에 구현할 애니메이션을 작성, child에 설정된 위젯이 builder에 전해져서 애니메이션이 적용된다.
  * 
  */
 // ignore: prefer_const_constructors
@@ -39,8 +47,9 @@ class HomeScreen extends StatelessWidget {
         child: Container(
           color: Color(0xFFEAEAEA),
           child: AnimatedBuilder(
-            animation: controller,
+            animation: controller, // 애니메이션을 제어하는 컨트롤러, 변수가 전달된다.
             builder: (context, _) {
+              // "_"는 파라미터를 사용하지 않음을 의미
               return LayoutBuilder(
                 builder: (context, constraints) {
                   return Stack(
@@ -60,12 +69,13 @@ class HomeScreen extends StatelessWidget {
                             cartBarHeight,
                         child: Container(
                           decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                  bottomLeft:
-                                      Radius.circular(defaultPadding * 1.5),
-                                  bottomRight:
-                                      Radius.circular(defaultPadding * 1.5))),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(defaultPadding * 1.5),
+                              bottomRight:
+                                  Radius.circular(defaultPadding * 1.5),
+                            ),
+                          ),
                           child: GridView.builder(
                             itemCount: demo_products.length,
                             gridDelegate:
@@ -80,7 +90,15 @@ class HomeScreen extends StatelessWidget {
                               crossAxisSpacing: defaultPadding,
                             ),
                             itemBuilder: ((context, index) => ProductCard(
-                                product: demo_products[index], press: () {})),
+                                product: demo_products[index],
+                                press: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => DetailsScreen(
+                                            product: demo_products[index])),
+                                  );
+                                })),
                           ),
                         ),
                       ),
@@ -101,7 +119,8 @@ class HomeScreen extends StatelessWidget {
                             _onVerticalGesture(details);
                           },
                           child: Container(
-                            color: Colors.red,
+                            // color: Colors.red,
+                            color: Color(0xFFEAEAEA),
                           ),
                         ),
                       ),
