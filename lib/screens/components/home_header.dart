@@ -9,24 +9,21 @@ class HomeHeader extends StatelessWidget {
     return Container(
       color: Colors.white,
       height: headerHeight,
-      padding: EdgeInsets.all(defaultPadding),
+      padding: const EdgeInsets.all(defaultPadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Good Morning!",
-                  style: Theme.of(context).textTheme.bodySmall),
+              Text("Good Morning!", style: Theme.of(context).textTheme.bodySmall),
               Text(
                 "Caesar Rincon",
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(color: Colors.black54),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.black54),
               ),
             ],
           ),
-          CircleAvatar(
+          const CircleAvatar(
             backgroundColor: Colors.transparent,
             backgroundImage: AssetImage("assets/images/profile.png"),
           )

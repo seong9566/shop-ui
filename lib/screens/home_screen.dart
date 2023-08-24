@@ -8,22 +8,20 @@ import 'package:custom_shop/screens/components/product_card.dart';
 import 'package:custom_shop/screens/details/details_screen.dart';
 import 'package:flutter/material.dart';
 
-/**
- * LayoutBuilder란?
- * - 반응형 레이아웃을 위한 위젯.
- * - 화면의 크기에 따라 위젯의 크기가 알맞게 배치되도록 해준다.
- * - constraints.maxHeight : 부모위젯에서 제공되는 최대 높이
- * 
- * 
- * GestureDetector란?
- * 사용자의 움직임을 감지 하는 위젯, 즉 유저들과 상호작용 하는 가장 순수한 방법
- * 
- * 
- * AnimatedBuilder란?
- * 위젯이 많은 복잡한 화면에서 세밀하게 애니메이션을 구현할 수 있도록 함.
- * builder에 구현할 애니메이션을 작성, child에 설정된 위젯이 builder에 전해져서 애니메이션이 적용된다.
- * 
- */
+/// LayoutBuilder란?
+/// - 반응형 레이아웃을 위한 위젯.
+/// - 화면의 크기에 따라 위젯의 크기가 알맞게 배치되도록 해준다.
+/// - constraints.maxHeight : 부모위젯에서 제공되는 최대 높이
+///
+///
+/// GestureDetector란?
+/// 사용자의 움직임을 감지 하는 위젯, 즉 유저들과 상호작용 하는 가장 순수한 방법
+///
+///
+/// AnimatedBuilder란?
+/// 위젯이 많은 복잡한 화면에서 세밀하게 애니메이션을 구현할 수 있도록 함.
+/// builder에 구현할 애니메이션을 작성, child에 설정된 위젯이 builder에 전해져서 애니메이션이 적용된다.
+///
 // ignore: prefer_const_constructors
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -56,30 +54,22 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       AnimatedPositioned(
                         duration: panelTransition,
-                        top: controller.homeState == HomeState.normal
-                            ? headerHeight
-                            : -(constraints.maxHeight -
-                                cartBarHeight * 2 -
-                                headerHeight),
+                        top: controller.homeState == HomeState.normal ? headerHeight : -(constraints.maxHeight - cartBarHeight * 2 - headerHeight),
                         left: 0,
                         right: 0,
                         // header의 높이, cartBar의 높이를 뺀 나머지 공간을 GridView 공간으로 활용.
-                        height: constraints.maxHeight -
-                            headerHeight -
-                            cartBarHeight,
+                        height: constraints.maxHeight - headerHeight - cartBarHeight,
                         child: Container(
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(defaultPadding * 1.5),
-                              bottomRight:
-                                  Radius.circular(defaultPadding * 1.5),
+                              bottomRight: Radius.circular(defaultPadding * 1.5),
                             ),
                           ),
                           child: GridView.builder(
                             itemCount: demo_products.length,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                               // 2개씩
                               crossAxisCount: 2,
                               // 각 아이템의 가로,세로 비율, 1보다 크다면 가로다 더 긴 아이템, 현재는
@@ -93,11 +83,15 @@ class HomeScreen extends StatelessWidget {
                                 product: demo_products[index],
                                 press: () {
                                   Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => DetailsScreen(
-                                            product: demo_products[index])),
-                                  );
+                                      context,
+                                      PageRouteBuilder(
+                                        transitionDuration: Duration(milliseconds: 500),
+                                        reverseTransitionDuration: Duration(milliseconds: 500),
+                                        pageBuilder: (context, animation, secondaryAnimation) => FadeTransition(
+                                          opacity: animation,
+                                          child: DetailsScreen(product: demo_products[index]),
+                                        ),
+                                      ));
                                 })),
                           ),
                         ),
@@ -108,9 +102,7 @@ class HomeScreen extends StatelessWidget {
                         bottom: 0,
                         left: 0,
                         right: 0,
-                        height: controller.homeState == HomeState.normal
-                            ? cartBarHeight
-                            : (constraints.maxHeight - cartBarHeight),
+                        height: controller.homeState == HomeState.normal ? cartBarHeight : (constraints.maxHeight - cartBarHeight),
                         child: GestureDetector(
                           //onVerticalDragUpdate : 사용자가 수직으로 드래그한 이벤트
                           onVerticalDragUpdate: (details) {
@@ -127,9 +119,7 @@ class HomeScreen extends StatelessWidget {
                       //Header
                       AnimatedPositioned(
                         duration: panelTransition,
-                        top: controller.homeState == HomeState.normal
-                            ? 0
-                            : -headerHeight,
+                        top: controller.homeState == HomeState.normal ? 0 : -headerHeight,
                         right: 0,
                         left: 0,
                         height: headerHeight,
