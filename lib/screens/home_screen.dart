@@ -9,6 +9,8 @@ import 'package:custom_shop/screens/components/product_card.dart';
 import 'package:custom_shop/screens/details/details_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'components/cart_detail_view.dart';
+
 /// LayoutBuilder란?
 /// - 반응형 레이아웃을 위한 위젯.
 /// - 화면의 크기에 따라 위젯의 크기가 알맞게 배치되도록 해준다.
@@ -118,12 +120,19 @@ class HomeScreen extends StatelessWidget {
                             _onVerticalGesture(details);
                           },
                           child: Container(
-                            // color: Colors.red,
-                            color: Color(0xFFEAEAEA),
-                            child: CartShortView(
-                              controller: controller,
-                            ),
-                          ),
+                              padding: EdgeInsets.all(defaultPadding / 2),
+                              alignment: Alignment.topLeft,
+                              color: Color(0xFFEAEAEA),
+                              child: AnimatedSwitcher(
+                                duration: panelTransition,
+                                child: controller.homeState == HomeState.normal
+                                    ? CartShortView(
+                                        controller: controller,
+                                      )
+                                    : CartDetailView(
+                                        controller: controller,
+                                      ),
+                              )),
                         ),
                       ),
                       //Header
