@@ -22,9 +22,8 @@ import 'components/cart_detail_view.dart';
 ///
 ///
 /// AnimatedBuilder란?
-/// 위젯이 많은 복잡한 화면에서 세밀하게 애니메이션을 구현할 수 있도록 함.
-/// builder에 구현할 애니메이션을 작성, child에 설정된 위젯이 builder에 전해져서 애니메이션이 적용된다.
-///
+/// 상태에 따라 Animated를 적용하기 위해서 사용했음
+/// 아래의 코드에선 State에 따라 rebuild를 함.
 // ignore: prefer_const_constructors
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
