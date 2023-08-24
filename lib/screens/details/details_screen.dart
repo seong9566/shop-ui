@@ -28,6 +28,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               onPressed: () {
                 widget.onProductAdd();
                 setState(() {
+                  //cartTag 이유 : 각 이미지 별로 한번씩만 Cart에 이미지가 담기고 이후엔 같은 이미지로 계속 들어가기 위함
                   _cartTag = '_cartTag';
                 });
                 Navigator.pop(context);
