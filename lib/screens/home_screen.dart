@@ -3,6 +3,7 @@
 import 'package:custom_shop/constants.dart';
 import 'package:custom_shop/controllers/home_controller.dart';
 import 'package:custom_shop/models/Product.dart';
+import 'package:custom_shop/screens/components/cart_short_view.dart';
 import 'package:custom_shop/screens/components/home_header.dart';
 import 'package:custom_shop/screens/components/product_card.dart';
 import 'package:custom_shop/screens/details/details_screen.dart';
@@ -89,7 +90,13 @@ class HomeScreen extends StatelessWidget {
                                         reverseTransitionDuration: Duration(milliseconds: 500),
                                         pageBuilder: (context, animation, secondaryAnimation) => FadeTransition(
                                           opacity: animation,
-                                          child: DetailsScreen(product: demo_products[index]),
+                                          child: DetailsScreen(
+                                            product: demo_products[index],
+                                            onProductAdd: () {
+                                              //상품을 카트에 추가
+                                              controller.addProductToCart(demo_products[index]);
+                                            },
+                                          ),
                                         ),
                                       ));
                                 })),
@@ -113,6 +120,9 @@ class HomeScreen extends StatelessWidget {
                           child: Container(
                             // color: Colors.red,
                             color: Color(0xFFEAEAEA),
+                            child: CartShortView(
+                              controller: controller,
+                            ),
                           ),
                         ),
                       ),
